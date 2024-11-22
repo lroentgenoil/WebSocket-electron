@@ -15,23 +15,7 @@ function createWindow() {
     }
   });
 
-  win.loadFile('index.html');
-
-  if (!serverInstance) {
-    serverInstance = fork(path.join(__dirname, 'server.js'));
-
-    serverInstance.on('message', (msg) => {
-      if (typeof msg === 'string') {
-        win.webContents.send('log-message', msg);  // Enviar los logs al renderer
-      } else if (msg.type === 'active-connections') {
-        win.webContents.send('active-connections', msg.data);  // Enviar conexiones activas
-      } else if (msg.type === 'connection-data') {
-        win.webContents.send('connection-data', msg.data);  // Enviar los datos de la conexión
-      }
-    });
-
-    win.webContents.send('server-status', 'Servidor iniciado');
-  }
+  win.loadFile(path.join(__dirname, '../renderer/index.html'));
 }
 
 app.whenReady().then(() => {
@@ -49,7 +33,7 @@ app.on('window-all-closed', () => {
 // Manejar el inicio/detención del servidor desde la GUI
 ipcMain.on('start-server', (event) => {
   if(!serverInstance){
-    serverInstance = fork(path.join(__dirname, 'server.js'));
+    serverInstance = fork(path.join(__dirname, '../services/server.js'));
   
     serverInstance.on('message', (msg) => {
       if (typeof msg === 'string') {

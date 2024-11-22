@@ -2,7 +2,7 @@
   "name": "websocket",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main/index.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder",
@@ -16,7 +16,7 @@
     "socket.io": "^4.8.1"
   },
   "build": {
-    "appId": "turrisystemS.A.S",
+    "appId": "lroentgneiol",
     "win": {
       "target": "nsis"
     }
