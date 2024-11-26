@@ -1,0 +1,31 @@
+.body-section{
+    position: fixed;
+    height: calc(100% - 38px);
+    top: 0;
+    overflow: auto;
+}
+
+.footer-section{
+    position: fixed;
+    height: 38px;
+    bottom: 0;
+}
+
+.main-button{
+    width: 50%;
+}
+
+.footer-button{
+    width: 100%;
+}
+
+.text-area{
+    resize: none;
+    width: 100%;
+    height: calc(100vh - 87px);
+}
+
+.table-limit{
+    height: calc(100vh - 87px);
+    overflow: auto;
+}

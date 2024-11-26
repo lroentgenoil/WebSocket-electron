@@ -5,49 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control del Servidor WebSocket</title>
   <script src="renderer.js" defer></script>
+
+  <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../src/renderer/styles.css">
 </head>
 <body>
   <div id="mainSection" class="section">
-    <h1>Control del Servidor WebSocket</h1>
-    <button id="startServer">Iniciar Servidor</button>
-    <button id="stopServer">Detener Servidor</button>
-    <p id="status">Estado del servidor: Servidor detenido</p>
-
-    <!-- Botones para acceder a las otras secciones -->
-    <button id="showLogs">Ver Logs</button>
-    <button id="showConnections">Ver Conexiones Activas</button>
+    <div class="row m-0">
+      <div class="col-12 d-flex align-items-center justify-content-center body-section">
+        <div class="row m-0">
+          <h1 class="col-sm-12 text-center">Control del Servidor WebSocket</h1>
+          <div class="col-sm-12 d-flex justify-content-center">
+            <p id="status">Estado del servidor: <span id="status-span" class="badge text-bg-danger">Servidor detenido</span></p>
+          </div>
+          <div class="col-sm-6 d-flex justify-content-center">
+            <button type="button" class="btn btn-success main-button" id="startServer">Iniciar Servidor</button>
+          </div>
+          <div class="col-sm-6 d-flex justify-content-center">
+            <button type="button" class="btn btn-danger main-button" id="stopServer">Detener Servidor</button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12 justify-content-center footer-section">
+        <div class="row m-0">
+          <!-- Botones para acceder a las otras secciones -->
+          <div class="col-6 d-flex justify-content-center">
+            <button type="button" class="btn btn-primary footer-button" id="showLogs">Ver Logs</button>
+          </div>
+          <div class="col-6 d-flex justify-content-center">
+            <button type="button" class="btn btn-primary footer-button" id="showConnections">Ver Conexiones Activas</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Logs -->
   <div id="logsSection" class="section">
-    <h2>Logs del servidor:</h2>
-    <textarea id="log" rows="18" readonly style="width: 100%; resize: none;"></textarea>
-    
-    <!-- Botón para volver a la parte principal -->
-    <button id="backToMainFromLogs">Volver al Control del Servidor</button>
+    <div class="row m-0">
+      <div class="col-12 body-section">
+        <div class="row m-0">
+          <h2 class="col-sm-12 text-center">Logs Del Servidor</h2>
+          <div class="col-sm-12">
+            <textarea id="log" readonly class="text-area"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón para volver a la parte principal -->
+      <div class="col-12 justify-content-center footer-section">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="button" class="btn btn-primary footer-button" id="backToMainFromLogs">Volver al Control del Servidor</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Conexiones TCP activas -->
   <div id="connectionsSection" class="section">
-    <h2>Conexiones TCP activas:</h2>
-    <table id="connectionsTable" border="1">
-      <thead>
-        <tr>
-          <th>Sala</th>
-          <th>Conexiones Activas</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Aquí se llenará la tabla dinámicamente -->
-      </tbody>
-    </table>
-
-    <h2>Datos de la conexión seleccionada:</h2>
-    <textarea id="dataArea" rows="10" readonly style="width: 100%; resize: none;"></textarea>
-    
-    <!-- Botón para volver a la parte principal -->
-    <button id="backToMainFromConnections">Volver al Control del Servidor</button>
+    <div class="row m-0">
+      <div class="col-12 body-section">
+        <div class="row m-0">
+          <h2 class="col-sm-12 text-center">Conexiones TCP Activas</h2>
+          <div class="col-sm-7">
+            <div class="row m-0">
+              <div class="col-sm-12 p-0 table-limit">
+                <table id="connectionsTable" class="table table-dark table-striped text-center">
+                  <thead>
+                    <tr>
+                      <th>Sala</th>
+                      <th>Conexiones Activas</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Aquí se llenará la tabla dinámicamente -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+            <div class="col-sm-5">
+              <textarea id="dataArea" readonly class="text-area"></textarea>
+            </div>
+        </div>
+      </div>
+      <!-- Botón para volver a la parte principal -->
+      <div class="col-12 justify-content-center footer-section">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="button" class="btn btn-primary footer-button" id="backToMainFromConnections">Volver al Control del Servidor</button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const { fork } = require('child_process');
 
@@ -8,6 +8,8 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 500,
+    minHeight: 300,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true, // Para permitir require en renderer.js
@@ -16,6 +18,58 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, '../renderer/index.html'));
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'Editar',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' }
+      ]
+    },
+    {
+      label: 'Ayuda',
+      submenu: [
+        {
+          label: 'Acerca de',
+          click: async () => {
+            const { shell } = require('electron');
+            await shell.openExternal('https://github.com/lroentgenoil/WebSocket-electron')
+          }
+        }
+      ]
+    },
+    {
+      label: 'Vista',
+      submenu: [
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    },
+    {
+      label: 'Ventana',
+      submenu: [
+        { role: 'minimize' },
+        {
+          label: 'Abrir',
+          click: () => {
+            // Acción para el menú "Abrir"
+            console.log('Abrir seleccionado');
+          }
+        },
+      ]
+    }
+  ]);
+
+  // Asignar el menú a la ventana
+  Menu.setApplicationMenu(menu);
 }
 
 app.whenReady().then(() => {
@@ -45,7 +99,7 @@ ipcMain.on('start-server', (event) => {
       }
     });
   
-    event.reply('server-status', 'Servidor iniciado');
+    event.reply('server-status', 'Servidor Iniciado');
   }
 });
 
@@ -53,7 +107,7 @@ ipcMain.on('stop-server', (event) => {
   if (serverInstance) {
     serverInstance.send('stop-server');
     serverInstance.on('exit', () => {
-      event.reply('server-status', 'Servidor detenido');
+      event.reply('server-status', 'Servidor Detenido');
       serverInstance = null;
     });
   }

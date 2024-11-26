@@ -37,7 +37,8 @@ document.getElementById('backToMainFromConnections').addEventListener('click', (
 
 // funcionalidad index.js
 ipcRenderer.on('server-status', (event, message) => {
-  document.getElementById('status').innerText = `Estado del servidor: ${message}`;
+  document.getElementById('status-span').innerText = `${message}`;
+  document.getElementById('status-span').classList = message == 'Servidor Iniciado' ? 'badge text-bg-success' : 'badge text-bg-danger';
 });
 
 ipcRenderer.on('log-message', (event, log) => {
@@ -49,7 +50,7 @@ ipcRenderer.on('log-message', (event, log) => {
 // Mostrar las conexiones activas en la tabla
 ipcRenderer.on('active-connections', (event, connections) => {
   const tableBody = document.querySelector('#connectionsTable tbody');
-  tableBody.innerHTML = '';  // Limpiar la tabla antes de actualizar
+  tableBody.innerHTML = ''; 
 
   // Iterar sobre las conexiones y agregarlas a la tabla
   for (const [roomName, activeConnections] of Object.entries(connections)) {
