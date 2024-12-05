@@ -35,6 +35,11 @@ document.getElementById('backToMainFromConnections').addEventListener('click', (
   showSection('mainSection');
 });
 
+document.getElementById('deleteServerLogs').addEventListener('click', () => {
+  const logArea = document.getElementById('log');
+  logArea.value = '';
+});
+
 // funcionalidad index.js
 ipcRenderer.on('server-status', (event, message) => {
   document.getElementById('status-span').innerText = `${message}`;
@@ -59,17 +64,24 @@ ipcRenderer.on('active-connections', (event, connections) => {
     const connectionCell = document.createElement('td');
     const actionCell = document.createElement('td');
     const viewButton = document.createElement('button');
+    const deleteTCPLogs = document.createElement('button');
 
     roomCell.innerText = roomName;
     connectionCell.innerText = activeConnections;
     viewButton.innerText = 'Ver datos';
+    deleteTCPLogs.innerText = 'Borrar Logs';
     
     // Añadir un listener para el botón de ver datos
     viewButton.addEventListener('click', () => {
       ipcRenderer.send('view-connection-data', roomName);  // Enviar la sala al backend
     });
 
+    deleteTCPLogs.addEventListener('click', () => {
+      ipcRenderer.send('delete-tcp-logs', roomName);  // Enviar la sala al backend
+    });
+
     actionCell.appendChild(viewButton);
+    actionCell.appendChild(deleteTCPLogs);
     row.appendChild(roomCell);
     row.appendChild(connectionCell);
     row.appendChild(actionCell);
@@ -80,4 +92,9 @@ ipcRenderer.on('active-connections', (event, connections) => {
 ipcRenderer.on('connection-data', (event, data) => {
   const dataArea = document.getElementById('dataArea');
   dataArea.value = data;
+});
+
+ipcRenderer.on('error-server', (event, message) => {
+  document.getElementById('status-span').innerText = `${message}`;
+  document.getElementById('status-span').classList = message == 'Servidor Iniciado' ? 'badge text-bg-success' : 'badge text-bg-danger';
 });

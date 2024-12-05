@@ -22,6 +22,12 @@
 .text-area{
     resize: none;
     width: 100%;
+    height: calc(100vh - 130px);
+}
+
+.text-area-tcp{
+    resize: none;
+    width: 100%;
     height: calc(100vh - 87px);
 }
 

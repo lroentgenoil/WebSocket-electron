@@ -152,6 +152,13 @@ server.listen(9091, ipOrigin, () => {
     logMessage("Servidor WebSocket corriendo\n");
 });
 
+server.on('error', (err) => {
+    logMessage(`Error en el servidor: ${err.message}`)
+    if (process.send) {
+        process.send({ type: 'error', data: 'error' });
+    }
+});
+
 process.on('message', (msg) => {
     if (typeof msg === 'string' && msg === 'stop-server') {
         stopServer(() => {
@@ -165,6 +172,8 @@ process.on('message', (msg) => {
         if (mapConnection) {
             connectionDataMap.set(msg.roomName, {data: mapConnection.data, estado: true});
         }
+    } else if (msg.type === 'delete-log') {
+        connectionDataMap.get(msg.roomName).data = '';
     }
 });
 

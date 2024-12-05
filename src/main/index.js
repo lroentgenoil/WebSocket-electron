@@ -96,6 +96,8 @@ ipcMain.on('start-server', (event) => {
           event.reply('active-connections', msg.data);  // Enviar conexiones activas
       } else if (msg.type === 'connection-data') {
           event.reply('connection-data', msg.data);  // Enviar los datos de la conexión
+      } else if (msg.type === 'error') {
+        event.reply('error-server', msg.data);  // Enviar los datos de la conexión
       }
     });
   
@@ -116,5 +118,11 @@ ipcMain.on('stop-server', (event) => {
 ipcMain.on('view-connection-data', (event, roomName) => {
   if (serverInstance) {
       serverInstance.send({ type: 'view-connection-data', roomName });
+  }
+});
+
+ipcMain.on('delete-tcp-logs', (event, roomName) => {
+  if (serverInstance) {
+      serverInstance.send({ type: 'delete-log', roomName });
   }
 });
