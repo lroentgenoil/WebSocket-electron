@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/main/index.js",
   "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder",
+    "start": "cross-env NODE_ENV=development electron .",
+    "dist": "cross-env NODE_ENV=production electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     }
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "electron": "^33.0.2",
     "electron-builder": "^25.1.8"
   }
